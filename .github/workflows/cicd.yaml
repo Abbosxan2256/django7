@@ -1,0 +1,30 @@
+name: Django CI/CD Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using ssh-key
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: 146.190.85.59
+        username: root
+        password: ${{ secrets.PASSWORD }}
+        script: |
+          cd /var/www/tasks_cicd/project1/backend
+          git pull
+          systemctl restart gunicorn.service
+          systemctl reload nginx.service
+
+          whoami
+          
+          
+          
+
+#Parol: Bo1234B67b
+#IP: 128.199.152.57
